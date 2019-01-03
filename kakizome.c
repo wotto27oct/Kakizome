@@ -45,7 +45,9 @@ static void expect(char c) {
 static int eval_string(char *code, int *args) {
 	char *orig = p;
 	p = code;
-	int val = eval(args);
+	int val;
+	while (*p)
+		val = eval(args);
 	p = orig;
 	return val;
 }
@@ -63,6 +65,16 @@ static int eval(int *args){
 		p += 2;
 		read_until(']', func[name - 'A']);
 		return eval(args);
+	}
+
+	// "P" print primitive
+	if (*p == 'P') {
+		p++;
+		expect('(');
+		int val = eval(args);
+		expect(')');
+		printf("%d\n", val);
+		return val;
 	}
 
 	// Function application

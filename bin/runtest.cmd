@@ -29,6 +29,9 @@ call :runtest "F[- a 2] G[* F(- a 1) 3] G(1)" -6
 
 call :runtest "F[* a b] F(29 3)" 87
 
+echo === built-in function ===
+call :runtest "P(5)" 5
+
 exit /b
 
 REM == function "runtest"
