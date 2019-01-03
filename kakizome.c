@@ -11,6 +11,9 @@
 #include <string.h>
 
 static char *p;
+static int func[26][100];
+
+static int eval(int);
 
 __attribute__((noreturn)) static void error(char *fmt, ...){
 	va_list ap;
@@ -20,13 +23,59 @@ __attribute__((noreturn)) static void error(char *fmt, ...){
 	exit(1);
 }
 
+static void read_until(char c, char *buf) {
+	for (; *p != c; p++, buf++)
+		*buf = *p;
+	p++;
+	*buf = '\0';
+}
+
 static void skip(){
 	while (isspace(*p))
 		p++;
 }
 
-static int eval(){
+static void expect(char c) {
+	if (*p != c)
+		error("%c expected: %s", c, p);
+	p++;
+}
+
+
+static int eval_string(char *code, int arg) {
+	char *orig = p;
+	p = code;
+	int val = eval(arg);
+	p = orig;
+	return val;
+}
+
+static int eval(int arg){
 	skip();
+
+	// Function parameter
+	if (*p == '.'){
+		p++;
+		return arg;
+	}
+
+	// Function definition
+	if ('A' <= *p && *p <= 'Z' && p[1] == '[') {
+		char name = *p;
+		p += 2;
+		read_until(']', func[name - 'A']);
+		return eval(arg);
+	}
+
+	// Function application
+	if ('A' <= *p && *p <= 'Z' && p[1] == '(') {
+		char name = *p;
+		p += 2;
+		int newarg = eval(arg);
+		expect(')');
+		return eval_string(func[name - 'A'], newarg);
+	}
+	// Literal numbers
 	if (isdigit(*p)){
 		int val = *p++ - '0';
 		while (isdigit(*p))
@@ -34,10 +83,11 @@ static int eval(){
 		return val;
 	}
 
+	// Arithmetic operators
 	if (strchr("+-*/", *p)){
 		int op = *p++;
-		int x = eval();
-		int y = eval();
+		int x = eval(arg);
+		int y = eval(arg);
 		switch (op){
 		case '+': return x + y;
 		case '-': return x - y;
@@ -51,6 +101,6 @@ static int eval(){
 int main(int argc, char **argv){
 	p = argv[1];
 	while(*p)
-		printf("%d\n", eval());
+		printf("%d\n", eval(0));
 	return 0;
 }

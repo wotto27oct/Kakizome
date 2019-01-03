@@ -19,7 +19,14 @@ call :runtest "/ 121 11" 11
 call :runtest "+++1 2 3 4" 10
 call :runtest "+ 1 + 2 + 3 4" 10
 call :runtest "+ 3 * 5 6" 33
-exit /b 
+
+echo === functions ===
+call :runtest "F[+ . .] F(1)" 2
+call :runtest "F[* . 2] F(7)" 14
+call :runtest "F[* . .] F(F(3))" 81
+call :runtest "F[* . .] F(F(F(F(2))))" 65536
+
+exit /b
 
 REM == function "runtest"
 :runtest
