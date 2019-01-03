@@ -77,6 +77,14 @@ static int eval(int *args){
 		return val;
 	}
 
+	// "I" input primitive
+	if (*p == 'I') {
+		p += 3;
+		int val;
+		scanf("%d", &val);
+		return val;
+	}
+
 	// Function application
 	if ('A' <= *p && *p <= 'Z' && p[1] == '(') {
 		int newargs[26];
