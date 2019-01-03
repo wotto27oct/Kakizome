@@ -21,10 +21,13 @@ call :runtest "+ 1 + 2 + 3 4" 10
 call :runtest "+ 3 * 5 6" 33
 
 echo === functions ===
-call :runtest "F[+ . .] F(1)" 2
-call :runtest "F[* . 2] F(7)" 14
-call :runtest "F[* . .] F(F(3))" 81
-call :runtest "F[* . .] F(F(F(F(2))))" 65536
+call :runtest "F[+ a a] F(1)" 2
+call :runtest "F[* a 2] F(7)" 14
+call :runtest "F[* a a] F(F(3))" 81
+call :runtest "F[* a a] F(F(F(F(2))))" 65536
+call :runtest "F[- a 2] G[* F(- a 1) 3] G(1)" -6
+
+call :runtest "F[* a b] F(29 3)" 87
 
 exit /b
 
