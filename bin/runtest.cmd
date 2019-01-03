@@ -4,10 +4,16 @@ setlocal
 gcc -std=c99 -o kakizome kakizome.c
 
 REM == main function
+echo === basic ===
 call :runtest 0 0
 call :runtest 1 1
 call :runtest 19 19
 call :runtest "1 2 3" "1 2 3"
+
+echo === + ===
+call :runtest "+ 1 2" 3
+call :runtest "+ 10 20" 30
+call :runtest "+ 3 4" 6
 exit /b 
 
 REM == function "runtest"

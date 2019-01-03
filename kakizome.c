@@ -32,6 +32,11 @@ static int eval(){
 			val = val * 10 + (*p++ - '0');
 		return val;
 	}
+
+	if (*p == '+'){
+		p++;
+		return eval() + eval();
+	}
 	error("invalid character: %c", *p);
 }
 
