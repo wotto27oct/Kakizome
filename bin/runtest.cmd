@@ -14,6 +14,8 @@ echo === arithmetic operators ===
 call :runtest "+ 1 2" 3
 call :runtest "+ 10 20" 30
 call :runtest "- 5 2" 3
+call :runtest "* 2 4" 8
+call :runtest "/ 121 11" 11
 exit /b 
 
 REM == function "runtest"

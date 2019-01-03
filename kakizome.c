@@ -8,6 +8,7 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
 
 static char *p;
 
@@ -33,11 +34,16 @@ static int eval(){
 		return val;
 	}
 
-	if (*p == '+' || *p == '-'){
+	if (strchr("+-*/", *p)){
 		int op = *p++;
 		int x = eval();
 		int y = eval();
-		return (op == '+') ? x + y : x - y;
+		switch (op){
+		case '+': return x + y;
+		case '-': return x - y;
+		case '*': return x * y;
+		case '/': return x / y;
+		}
 	}
 	error("invalid character: %c", *p);
 }
