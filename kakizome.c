@@ -33,9 +33,11 @@ static int eval(){
 		return val;
 	}
 
-	if (*p == '+'){
-		p++;
-		return eval() + eval();
+	if (*p == '+' || *p == '-'){
+		int op = *p++;
+		int x = eval();
+		int y = eval();
+		return (op == '+') ? x + y : x - y;
 	}
 	error("invalid character: %c", *p);
 }

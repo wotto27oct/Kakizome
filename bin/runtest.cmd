@@ -10,10 +10,10 @@ call :runtest 1 1
 call :runtest 19 19
 call :runtest "1 2 3" "1 2 3"
 
-echo === + ===
+echo === arithmetic operators ===
 call :runtest "+ 1 2" 3
 call :runtest "+ 10 20" 30
-call :runtest "+ 3 4" 6
+call :runtest "- 5 2" 3
 exit /b 
 
 REM == function "runtest"
