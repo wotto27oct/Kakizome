@@ -5,7 +5,7 @@ gcc -std=c99 -o kakizome kakizome.c
 
 REM == main function
 call :runtest 0 0
-echo OK
+call :runtest 1 1
 exit /b 
 
 REM == function "runtest"
