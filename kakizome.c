@@ -16,6 +16,7 @@ static int eval(){
 			val = val * 10 + (*p++ - '0');
 		return val;
 	}
+	p++;
 	return 0;
 }
 
